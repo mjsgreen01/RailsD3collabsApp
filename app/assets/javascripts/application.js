@@ -44,7 +44,7 @@ $(document).ready(function() {
                 d3array.push({'label' : i, 'value' : artistCount[i]});
             }
             console.log('d3 array is ', JSON.stringify(d3array))
-
+            change(d3array);
 
         }, "json");
         $('body').scrollTop(0);

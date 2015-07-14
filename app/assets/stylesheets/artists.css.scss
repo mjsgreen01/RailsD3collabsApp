@@ -96,11 +96,14 @@ text-decoration: none;
 .headSection{
 	position: fixed;
 	margin: 0 auto;
-padding: 0 20px;
-right: 0;
-left: 0;
-max-width: 930px;
-background-color: #1A1A1A;
+	padding: 0 20px;
+	right: 0;
+	left: 0;
+	max-width: 930px;
+	background-color: #1A1A1A;
+}
+.labels text{
+	fill: white;
 }
 
 

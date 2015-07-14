@@ -19,13 +19,14 @@
 
 body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  width: 960px;
-  height: 500px;
+  width: 1760px;
+  height: 1500px;
   position: relative;
 }
 svg{
     width: 100%;
     height: 100%;
+    margin-top: 90px;
 }
 path.slice{
     stroke-width:2px;
@@ -33,7 +34,7 @@ path.slice{
 
 polyline{
     opacity: .3;
-    stroke: black;
+    stroke: white;
     stroke-width: 2px;
     fill: none;
 }
@@ -41,8 +42,8 @@ polyline{
 </style>
 
 Duration: 0<input type="range" id="duration" min="0" max="5000">5000 
-<br>
-<button class="randomize">randomize</button> 
+<!-- <br>
+<button class="randomize">randomize</button>  -->
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
 <script>
@@ -132,14 +133,14 @@ function second (){
     });
 }
 
-change(first());
+// change(first());
 
 // instead of calling 'change' on click,
 // call it on success of ajax 'get' func., passing in result
-d3.select(".randomize")
-    .on("click", function(){
-        change(second());
-    });
+// d3.select(".randomize")
+//     .on("click", function(){
+//         change(second());
+//     });
 
 function mergeWithFirstEqualZero(first, second){
     var secondSet = d3.set(); second.forEach(function(d) { secondSet.add(d.label); });
