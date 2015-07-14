@@ -1,0 +1,107 @@
+// Place all the styles related to the Artists controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+body{
+	background-color: #1A1A1A;
+	padding-top: 1px;
+	margin-top: -1px;
+	font-family: 'Lato';
+	font-weight: 400;
+}	
+.mainContain{
+	max-width: 1030px;
+	margin: 0 auto;
+	padding: 0 20px;
+}
+#artistContain{
+	padding-top: 264px;
+	display: flex;
+	flex-wrap: wrap;
+}
+.artistName{
+	width: 33.33%;
+	text-align: center;
+	display: flex;
+}
+.artistName a{
+	display: inline-block;
+	margin: 0 auto;
+	padding: 22px 0;
+	width: 242px;
+	border: 1px solid #ccc;
+	margin-bottom: 33px;
+	text-decoration: none;
+	color: #ccc;
+	font-size: 18px;
+	transition: all .3s ease ;
+	transition-property: background-color, color;
+}
+a:visited{
+	color: #ccc;
+}
+a:hover {
+background-color: #2B2B2B;
+color: #fff;
+}
+input[type="submit"]{
+	display: none;
+}
+.searchContain{
+	text-align: center;
+	margin-bottom: 22px;
+}
+.searchContain #search{
+	width: 100%;
+	box-sizing: border-box;
+	padding: 11px 50px;
+	border-radius: 15px;
+	border: 2px solid #ccc;
+	font-size: 18px;
+	background-color: #1A1A1A;
+	color: #fff;
+	background-image: image-url('search-iconSmall.svg');
+	background-repeat: no-repeat;
+	background-size: 27px;
+	background-position: 10px center;
+}
+#artists_search{
+}
+.titlesContain{
+color: #ccc;
+}
+.titlesContain h1{
+	font-size: 56px;
+	margin-bottom: 11px;
+	font-family: 'Lemon';
+	color: #fff;
+}
+.paginateContain{
+	visibility: hidden;
+}
+.songContain{
+	font-size: 18px;
+	margin-bottom: 22px;
+}
+.songContain a{
+	color: #90BCFF;
+text-decoration: none;
+}
+.producerTitle{
+	font-size: 38px;
+}
+.songsContain{
+	margin-top: 55px;
+}
+.headSection{
+	position: fixed;
+	margin: 0 auto;
+padding: 0 20px;
+right: 0;
+left: 0;
+max-width: 930px;
+background-color: #1A1A1A;
+}
+
+
+

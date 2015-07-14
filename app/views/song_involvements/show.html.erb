@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Song:</strong>
+  <%= @song_involvement.song_id %>
+</p>
+
+<p>
+  <strong>Artist:</strong>
+  <%= @song_involvement.artist_id %>
+</p>
+
+<p>
+  <strong>Primary:</strong>
+  <%= @song_involvement.primary %>
+</p>
+
+<p>
+  <strong>Featured:</strong>
+  <%= @song_involvement.featured %>
+</p>
+
+<p>
+  <strong>Producer:</strong>
+  <%= @song_involvement.producer %>
+</p>
+
+<%= link_to 'Edit', edit_song_involvement_path(@song_involvement) %> |
+<%= link_to 'Back', song_involvements_path %>

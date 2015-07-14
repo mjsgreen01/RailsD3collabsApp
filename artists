@@ -1,0 +1,63 @@
+\l
+select * from artists
+\d
+\q
+\l
+\d
+\d songs
+\d schema_migrations
+\d artists
+\q
+\d
+\q
+\d
+\d songs
+\q
+\d
+\d songs
+\d schema_migrations
+\d artists
+\q
+\q
+\d
+\d songs
+ALTER TABLE songs ALTER COLUMN title type text
+\d songs
+ALTER TABLE songs ALTER COLUMN title type text;
+ALTER TABLE songs DROP COLUMN;
+ALTER TABLE songs DROP COLUMN
+\d songs
+ALTER TABLE songs DROP COLUMN title;
+ALTER TABLE songs DROP COLUMN title
+\d songs
+\q
+\d songs
+\q
+\l
+\d
+\l
+\l producer_db_development
+\dt
+\dt producer_db_development
+\connect producer_db_development
+\dt
+connect songs
+\dt
+\d{t|i|s|v}
+\
+\?
+\d[S+]
+\d[S]
+\d
+\d songs
+ALTER TABLE songs ALTER COLUMN title type text;
+ALTER COLUMN title type text;
+ALTER TABLE songs ALTER COLUMN title type text;
+\d songs
+ALTER TABLE songs ALTER COLUMN song_link type text;
+\d songs
+\d songs
+\q
+\connect producer_db_development
+ALTER TABLE artists ALTER COLUMN name type text;
+\s artists
