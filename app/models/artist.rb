@@ -16,9 +16,12 @@ class Artist < ActiveRecord::Base
 		if artist
 			searchedArtist = where('LOWER(name) = ?', "#{artist.downcase}").first
 			puts 'searched artist is'
-			puts searchedArtist
-			# return all collaborations, and filter out the searched-for artist
+			if !searchedArtist
+				puts 'artist is invalid!!!!!!!!!!'
+			end
+			puts 'after checking validity'
 			collabsArray = searchedArtist.songs.map{|i| i.artists}.flatten.map{|c| c.name}.select{|u| u.downcase != artist.downcase}
+			# return all collaborations, and filter out the searched-for artist
 			# puts 'collabs-Array is: '
 			# puts collabsArray
 		end
