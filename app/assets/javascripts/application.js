@@ -17,6 +17,12 @@
 
 
 $(document).ready(function() {
+    // clear error messages on keyup
+    $("#artists_search").find('input').keydown(function(){
+        $('.validArtist').removeClass('notValidArtist');
+    });
+
+    // handle search box submission
     $("#artists_search").submit(function() {
         // console.log($("#artists_search").find("#search").val())
         var searchedArtist = $("#artists_search").find("#search").val();
