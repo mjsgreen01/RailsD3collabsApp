@@ -105,6 +105,15 @@ text-decoration: none;
 .labels text{
 	fill: white;
 }
-
+.validArtist{
+	display: none;
+}
+.notValidArtist{
+	display: block;
+	color: red;
+  text-align: left;
+  font-size: 16px;
+  padding-left: 50px;
+}
 
 

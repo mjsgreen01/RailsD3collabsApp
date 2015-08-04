@@ -22,30 +22,34 @@ $(document).ready(function() {
         var searchedArtist = $("#artists_search").find("#search").val();
         $.get($("#artists_search").attr("action"), $("#artists_search").serialize(), function(result){
             // console.log('results is ', JSON.stringify(result));
-            var artistCount = {}
-            var d3array = [];
-            for(var i = 0; i < result.length; i++){
-                artist = result[i].name;
-                if(!artistCount[artist]){
-                    artistCount[artist] = 1;
-                }else{
-                    artistCount[artist] += 1;
+            // if not a valid artist name, display error message
+            if(result[0].name === "not a valid artist name"){
+                $('.validArtist').addClass('notValidArtist');
+            }else{
+                var artistCount = {};
+                var d3array = [];
+                for(var i = 0; i < result.length; i++){
+                    artist = result[i].name;
+                    if(!artistCount[artist]){
+                        artistCount[artist] = 1;
+                    }else{
+                        artistCount[artist] += 1;
+                    }
                 }
+                // result.each(function(){
+                //     artist = $(this);
+                //     if(!artistCount[artist]){
+                //         artistCount[artist] = 1;
+                //     }else{
+                //         artistCount[artist] += 1;
+                //     }
+                // });
+                for(var i in artistCount){
+                    d3array.push({'label' : i, 'value' : artistCount[i]});
+                }
+                console.log('d3 array is ', JSON.stringify(d3array))
+                change(d3array);
             }
-            // result.each(function(){
-            //     artist = $(this);
-            //     if(!artistCount[artist]){
-            //         artistCount[artist] = 1;
-            //     }else{
-            //         artistCount[artist] += 1;
-            //     }
-            // });
-            for(var i in artistCount){
-                d3array.push({'label' : i, 'value' : artistCount[i]});
-            }
-            console.log('d3 array is ', JSON.stringify(d3array))
-            change(d3array);
-
         }, "json");
         $('body').scrollTop(0);
         return false;
