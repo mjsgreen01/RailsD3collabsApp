@@ -51,7 +51,7 @@ Duration: 0<input type="range" id="duration" min="0" max="5000">5000
 
 var svg = d3.select("body")
     .append("svg")
-    .append("g")
+    .append("g");
 
 svg.append("g")
     .attr("class", "slices");
@@ -67,7 +67,7 @@ var width = 960,
 var pie = d3.layout.pie()
     .sort(null)
     .value(function(d) {
-        return d.value;
+        return d.showing;
     });
 
 var arc = d3.svg.arc()
@@ -76,6 +76,8 @@ var arc = d3.svg.arc()
 
 var outerArc = d3.svg.arc()
     .innerRadius(radius * 0.9)
+    // outerRadius is the radius of the invisible circle 
+    // where the polylines change directions to point to names
     .outerRadius(radius * 0.9);
 
 svg.attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
@@ -83,49 +85,49 @@ svg.attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 var key = function(d){ return d.data.label; };
 
 var color = d3.scale.category20()
-    .domain(["Lorem ipsum", "dolor sit", "amet", "consectetur", "adipisicing", "elit", "sed", "do", "eiusmod", "tempor", "incididunt"])
+    .domain(["Lorem ipsum", "dolor sit", "amet", "consectetur", "adipisicing", "elit", "sed", "do", "eiusmod", "tempor", "incididunt"]);
     //.range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
 
-// initial data set
-function first (){
-    return [
-    { label: "Lorem ipsum",
-      value: 23
-    }, 
-    { label: "dolor sit",
-      value: 2
-    }, 
-    { label: "amet",
-      value: 4
-    }, 
-    { label: "consectetur",
-      value: 7
-    }, 
-    { label: "adipisicing",
-      value: 24
-    }, 
-    { label: "elit",
-      value: 10
-    }, 
-    { label: "sed",
-      value: 7
-    }, 
-    { label: "do",
-      value: 18
-    }, 
-    { label: "eiusmod",
-      value: 6
-    }, 
-    { label: "tempor",
-      value: 7
-    }, 
-    { label: "incididunt",
-      value: 9
-    }
-  ].sort(function(a,b) {
-        return d3.ascending(a.label, b.label);
-    });
-}
+// // initial data set
+// function first (){
+//     return [
+//     { label: "Lorem ipsum",
+//       value: 23
+//     }, 
+//     { label: "dolor sit",
+//       value: 2
+//     }, 
+//     { label: "amet",
+//       value: 4
+//     }, 
+//     { label: "consectetur",
+//       value: 7
+//     }, 
+//     { label: "adipisicing",
+//       value: 24
+//     }, 
+//     { label: "elit",
+//       value: 10
+//     }, 
+//     { label: "sed",
+//       value: 7
+//     }, 
+//     { label: "do",
+//       value: 18
+//     }, 
+//     { label: "eiusmod",
+//       value: 6
+//     }, 
+//     { label: "tempor",
+//       value: 7
+//     }, 
+//     { label: "incididunt",
+//       value: 9
+//     }
+//   ].sort(function(a,b) {
+//         return d3.ascending(a.label, b.label);
+//     });
+// }
 // updated data set (retrieved with ajax)
 // function second (){
 //     return [{ label: "Lorem ipsum",  value: Math.random()}, { label: "dolor sit",  value: Math.random()}, { label: "amet",  value: Math.random()}, { label: "consectetur",  value: Math.random()}, { label: "adipisicing",  value: Math.random()}
@@ -147,8 +149,8 @@ function mergeWithFirstEqualZero(first, second){
     var secondSet = d3.set(); second.forEach(function(d) { secondSet.add(d.label); });
 
     var onlyFirst = first
-        .filter(function(d){ return !secondSet.has(d.label) })
-        .map(function(d) { return {label: d.label, value: 0}; });
+        .filter(function(d){ return !secondSet.has(d.label); })
+        .map(function(d) { return {label: d.label, value: d.value, showing: 0}; });
     return d3.merge([ second, onlyFirst ])
         .sort(function(a,b) {
             return d3.ascending(a.label, b.label);
@@ -158,7 +160,7 @@ function mergeWithFirstEqualZero(first, second){
 function change(data) {
     var duration = +document.getElementById("duration").value;
     var data0 = svg.select(".slices").selectAll("path.slice")
-        .data().map(function(d) { return d.data });
+        .data().map(function(d) { return d.data; });
     if (data0.length == 0) data0 = data;
     var was = mergeWithFirstEqualZero(data, data0);
     var is = mergeWithFirstEqualZero(data0, data);
@@ -207,7 +209,7 @@ function change(data) {
         .attr("dy", ".35em")
         .style("opacity", 0)
         .text(function(d) {
-            return d.data.label;
+            return d.data.label +" "+ d.data.value;
         })
         .each(function(d) {
             this._current = d;
@@ -222,7 +224,7 @@ function change(data) {
 
     text.transition().duration(duration)
         .style("opacity", function(d) {
-            return d.data.value == 0 ? 0 : 1;
+            return d.data.showing == 0 ? 0 : 1;
         })
         .attrTween("transform", function(d) {
             var interpolate = d3.interpolate(this._current, d);
@@ -267,7 +269,7 @@ function change(data) {
     
     polyline.transition().duration(duration)
         .style("opacity", function(d) {
-            return d.data.value == 0 ? 0 : .5;
+            return d.data.showing == 0 ? 0 : .5;
         })
         .attrTween("points", function(d){
             this._current = this._current;
@@ -288,7 +290,39 @@ function change(data) {
     polyline
         .exit().transition().delay(duration)
         .remove();
-};
+
+
+    // setTimeout(function(){ //must check the bounding-box positions only after transitions are done
+    // // pasted from stackoverflow
+    // // attempting to prevent label-overlap
+    // var prev;
+    // svg.select(".labels").selectAll("text").each(function(d, i) {
+    //   if(i > 0) {
+    //     var thisbb = this.getBoundingClientRect(),
+    //         prevbb = prev.getBoundingClientRect();
+    //         console.log(thisbb);
+    //     // move if they overlap
+    //     if(!(thisbb.right < prevbb.left || 
+    //             thisbb.left > prevbb.right || 
+    //             thisbb.bottom < prevbb.top || 
+    //             thisbb.top > prevbb.bottom)) {
+    //         var ctx = thisbb.left + (thisbb.right - thisbb.left)/2,
+    //             cty = thisbb.top + (thisbb.bottom - thisbb.top)/2,
+    //             cpx = prevbb.left + (prevbb.right - prevbb.left)/2,
+    //             cpy = prevbb.top + (prevbb.bottom - prevbb.top)/2,
+    //             off = Math.sqrt(Math.pow(ctx - cpx, 2) + Math.pow(cty - cpy, 2))/2;
+    //         d3.select(this).attr("transform",
+    //             "translate(" + Math.cos(((d.startAngle + d.endAngle - Math.PI) / 2)) *
+    //                                     (radius + off) + "," +
+    //                            Math.sin((d.startAngle + d.endAngle - Math.PI) / 2) *
+    //                                     (radius + off) + ")");
+    //     }
+    //   }
+    //   prev = this;
+    // });
+
+    // }, 4000);
+}
 
 </script>
 

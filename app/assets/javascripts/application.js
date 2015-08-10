@@ -36,7 +36,7 @@ $(document).ready(function() {
                 var d3array = [];
                 for(var i = 0; i < result.length; i++){
                     artist = result[i].name;
-                    if(!artistCount[artist]){
+                    if(artistCount[artist] === undefined){
                         artistCount[artist] = 1;
                     }else{
                         artistCount[artist] += 1;
@@ -51,9 +51,9 @@ $(document).ready(function() {
                 //     }
                 // });
                 for(var i in artistCount){
-                    d3array.push({'label' : i, 'value' : artistCount[i]});
+                    d3array.push({'label' : i, 'value' : artistCount[i], 'showing': 1});
                 }
-                console.log('d3 array is ', JSON.stringify(d3array))
+                console.log('d3 array is ', JSON.stringify(d3array));
                 change(d3array);
             }
         }, "json");
