@@ -42,16 +42,15 @@ $(document).ready(function() {
                         artistCount[artist] += 1;
                     }
                 }
-                // result.each(function(){
-                //     artist = $(this);
-                //     if(!artistCount[artist]){
-                //         artistCount[artist] = 1;
-                //     }else{
-                //         artistCount[artist] += 1;
-                //     }
-                // });
+
                 for(var i in artistCount){
-                    d3array.push({'label' : i, 'value' : artistCount[i], 'showing': 1});
+                    if(artistCount[i] < 3){
+                        // if(d3array.other === undefined){
+                        //     d3array.push({'label' : 'Other', 'value' : 1, 'showing': 1});
+                        // }
+                    }else{
+                        d3array.push({'label' : i, 'value' : artistCount[i], 'showing': 1});
+                    }
                 }
                 console.log('d3 array is ', JSON.stringify(d3array));
                 change(d3array);
