@@ -59,6 +59,8 @@ svg.append("g")
     .attr("class", "labels");
 svg.append("g")
     .attr("class", "lines");
+svg.append("text")
+    .attr("class", "artistNameDisplay");
 
 var width = 960,
     height = 450,
@@ -252,6 +254,7 @@ function change(data) {
         .exit().transition().delay(duration)
         .remove();
 
+    // update displayed number of collabs 
     text.text(function(d) {
             return d.data.label +" "+ d.data.value;
         });

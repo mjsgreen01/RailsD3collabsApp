@@ -25,13 +25,17 @@ $(document).ready(function() {
     // handle search box submission
     $("#artists_search").submit(function() {
         // console.log($("#artists_search").find("#search").val())
-        var searchedArtist = $("#artists_search").find("#search").val();
+        var searchedArtistVal = $("#artists_search").find("#search").val();
+        var artistNameDisplay = $(".artistNameDisplay");
         $.get($("#artists_search").attr("action"), $("#artists_search").serialize(), function(result){
             // console.log('results is ', JSON.stringify(result));
             // if not a valid artist name, display error message
             if(result[0].name === "not a valid artist name"){
                 $('.validArtist').addClass('notValidArtist');
             }else{
+                artistNameDisplay.fadeOut(1000, function(){
+                    artistNameDisplay.text(searchedArtistVal);
+                });
                 var artistCount = {};
                 var d3array = [];
                 for(var i = 0; i < result.length; i++){
@@ -54,6 +58,8 @@ $(document).ready(function() {
                 }
                 console.log('d3 array is ', JSON.stringify(d3array));
                 change(d3array);
+                // update name in middle of pie
+                artistNameDisplay.fadeIn(1000);
             }
         }, "json");
         $('body').scrollTop(0);
