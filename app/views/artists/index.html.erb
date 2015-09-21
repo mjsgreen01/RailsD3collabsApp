@@ -27,7 +27,7 @@ body {
 svg{
     width: 100%;
     height: 100%;
-    margin-top: 90px;
+    margin-top: 105px;
 }
 path.slice{
     stroke-width:2px;
@@ -42,9 +42,6 @@ polyline{
 
 </style>
 
-Duration: 0<input type="range" id="duration" min="0" max="5000">5000 
-<!-- <br>
-<button class="randomize">randomize</button>  -->
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
 <script>
@@ -64,7 +61,7 @@ svg.append("text")
 
 var width = 960,
     height = 450,
-    radius = Math.min(width, height) / 2;
+    radius = Math.min(width, height) / 1.65;
 
 var pie = d3.layout.pie()
     .sort(null)
@@ -82,7 +79,7 @@ var outerArc = d3.svg.arc()
     // where the polylines change directions to point to names
     .outerRadius(radius * 0.9);
 
-svg.attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+svg.attr("transform", "translate(" + width / 1.65 + "," + height / 1.65 + ")");
 
 var key = function(d){ return d.data.label; };
 
@@ -160,7 +157,7 @@ function mergeWithFirstEqualZero(first, second){
 }
 
 function change(data) {
-    var duration = +document.getElementById("duration").value;
+    var duration = 2500;
     var data0 = svg.select(".slices").selectAll("path.slice")
         .data().map(function(d) { return d.data; });
     if (data0.length == 0) data0 = data;
