@@ -33,6 +33,9 @@ $(document).ready(function() {
             if(result[0].name === "not a valid artist name"){
                 $('.validArtist').addClass('notValidArtist');
             }else{
+                // empty search bar
+                $("#artists_search").find("#search").val('');
+
                 artistNameDisplay.fadeOut(1000, function(){
                     artistNameDisplay.text(searchedArtistVal);
                 });
